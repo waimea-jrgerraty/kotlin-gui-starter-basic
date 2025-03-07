@@ -13,6 +13,8 @@ import java.awt.Font
 import java.awt.Rectangle
 import java.awt.event.ActionEvent
 import java.awt.event.ActionListener
+import java.awt.event.KeyEvent
+import java.awt.event.KeyListener
 import javax.swing.*
 
 /** Launch the application */
@@ -25,7 +27,7 @@ fun main() {
  * Main UI window (view) Defines the UI and responds to events The app model should be passwd as an
  * argument
  */
-class MainWindow : JFrame(), ActionListener {
+class MainWindow : JFrame(), ActionListener, KeyListener {
 
     // Fields to hold the UI elements
     private lateinit var greetingLabel: JLabel
@@ -68,6 +70,7 @@ class MainWindow : JFrame(), ActionListener {
         textbox.bounds = Rectangle(50, 125, 500, 100)
         textbox.font = defaultFont
         textbox.addActionListener(this)
+        textbox.addKeyListener(this)
         add(textbox)
 
         helloButton = JButton("Hello!")
@@ -104,5 +107,20 @@ class MainWindow : JFrame(), ActionListener {
                 greetingLabel.foreground = Color.RED
             }
         }
+    }
+
+    override fun keyTyped(e: KeyEvent?) {
+        println("Typed ${e?.keyChar}")
+    }
+
+    override fun keyPressed(e: KeyEvent?) {
+        println("Pressed ${e?.keyCode}")
+        if (e?.keyCode in KeyEvent.VK_A..KeyEvent.VK_Z) {
+            println("letter")
+        }
+    }
+
+    override fun keyReleased(e: KeyEvent?) {
+        println("Released ${e?.keyCode}")
     }
 }
